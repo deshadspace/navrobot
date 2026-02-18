@@ -1,0 +1,53 @@
+# Python
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data (DVC managed)
+data/raw/
+data/processed/
+data/features/
+
+# Models and checkpoints
+checkpoints/
+models/
+*.pt
+*.pth
+*.onnx
+
+# Logs
+logs/
+mlruns/
+wandb/
+*.log
+
+# Experiments
+experiments/results/
+
+# Docker
+.dockerignore
+
+# Environment
+.env
+.env.local
+
+# System
+.AppleDouble
+.LSOverride

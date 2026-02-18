@@ -1,0 +1,49 @@
+# Model Architecture & Hyperparameters
+
+perception:
+  backbone: "efficientnet-b0"
+  pretrained: true
+  
+  input_shape: [3, 224, 224]
+  num_classes: 10  # object categories
+  
+  encoder:
+    frozen_layers: 3  # freeze first 3 residual blocks
+    output_channels: 256
+
+navigation:
+  policy_network:
+    actor_hidden_dims: [256, 256]
+    critic_hidden_dims: [256, 256]
+    activation: "relu"
+    
+  observation_space:
+    camera_encoding_dim: 128
+    lidar_dim: 32
+    proprioception_dim: 6  # [x, y, theta, v_lin, v_ang, time]
+  
+  action_space:
+    type: "continuous"
+    dim: 2  # [linear_velocity, angular_velocity]
+    bounds: [[-0.5, 0.5], [-1.0, 1.0]]
+
+rl:
+  algorithm: "PPO"  # or "SAC"
+  
+  # PPO-specific
+  ppo:
+    clip_ratio: 0.2
+    entropy_coeff: 0.01
+    value_coeff: 0.5
+    
+  # SAC-specific
+  sac:
+    alpha: 0.2  # entropy regularization
+    target_entropy: -2  # target entropy for automatic alpha tuning
+    
+  general:
+    learning_rate: 3e-4
+    gamma: 0.99  # discount factor
+    gae_lambda: 0.95
+    batch_size: 64
+    num_updates: 10

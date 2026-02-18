@@ -1,0 +1,29 @@
+name: Deploy API
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build Docker image
+        run: |
+          docker build -t robot-api:${{ github.ref_name }} serving/
+      
+      - name: Push to registry
+        run: |
+          # Example: Google Cloud Registry
+          echo "Pushing robot-api:${{ github.ref_name }}"
+          # docker push gcr.io/project-id/robot-api:${{ github.ref_name }}
+      
+      - name: Deploy to Kubernetes
+        run: |
+          # Example: Deploy to GKE
+          # kubectl set image deployment/robot-api robot-api=gcr.io/project-id/robot-api:${{ github.ref_name }}
+          echo "Deploying robot-api:${{ github.ref_name }}"

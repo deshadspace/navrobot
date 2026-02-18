@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Downloads/robot-mlops-framework/configs"
+		},
+		{
+			"path": "../Downloads/robot-mlops-framework/tests"
+		}
+	],
+	"settings": {}
+}

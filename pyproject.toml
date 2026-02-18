@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robot-mlops-autonomy"
+version = "0.1.0"
+description = "Production-ready MLOps pipeline for robot autonomy"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Team", email = "team@example.com"}
+]
+
+dependencies = [
+    # Core ML
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "torch-onnx>=1.13.0",
+    
+    # RL
+    "gymnasium>=0.29.0",
+    "stable-baselines3>=2.0.0",
+    "numpy>=1.24.0",
+    
+    # MLOps
+    "mlflow>=2.0.0",
+    "wandb>=0.15.0",
+    "dvc>=3.0.0",
+    "pyyaml>=6.0",
+    
+    # API
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "pydantic>=2.0.0",
+    
+    # Monitoring
+    "prometheus-client>=0.18.0",
+    "scikit-learn>=1.3.0",
+    
+    # Utilities
+    "Pillow>=10.0.0",
+    "opencv-python>=4.8.0",
+    "requests>=2.31.0",
+    "tqdm>=4.66.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.9.0",
+    "flake8>=6.1.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+]
+
+colab = [
+    # Minimal dependencies for Colab
+    "torch",
+    "gymnasium",
+    "stable-baselines3",
+    "fastapi",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/robot-mlops-autonomy"
+Documentation = "https://robot-mlops-autonomy.readthedocs.io"
+Repository = "https://github.com/yourusername/robot-mlops-autonomy"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

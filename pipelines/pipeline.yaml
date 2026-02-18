@@ -1,0 +1,51 @@
+"""DVC pipeline definition for data and model versioning."""
+
+stages:
+  generate_data:
+    cmd: python simulation/generate_data.py --num_episodes 1000 --output data/raw/
+    deps:
+      - simulation/
+    outs:
+      - data/raw/simulation_logs:
+          cache: true
+    params:
+      - configs/env.yaml
+
+  preprocess_data:
+    cmd: python -c "from pipelines.data_pipeline import DataPipeline; DataPipeline().run()"
+    deps:
+      - data/raw/
+      - pipelines/data_pipeline.py
+    outs:
+      - data/processed:
+          cache: true
+    params:
+      - configs/training.yaml
+
+  train_perception:
+    cmd: python perception/train.py --epochs 50
+    deps:
+      - data/processed/
+      - perception/
+    metrics:
+      - metrics/perception.json:
+          cache: false
+    outs:
+      - checkpoints/perception_model.pt:
+          cache: true
+    params:
+      - configs/model.yaml
+
+  train_navigation:
+    cmd: python navigation/train_rl.py --total_timesteps 1000000
+    deps:
+      - simulation/
+      - navigation/
+    metrics:
+      - metrics/navigation.json:
+          cache: false
+    outs:
+      - checkpoints/navigation_policy.zip:
+          cache: true
+    params:
+      - configs/model.yaml
